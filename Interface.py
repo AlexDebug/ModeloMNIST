@@ -1,5 +1,6 @@
 from pygame.locals import *
 import pygame
+import sys 
 
 HEIGHT = 64
 WIDTH  = 64
