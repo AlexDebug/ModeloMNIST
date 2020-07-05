@@ -1,6 +1,7 @@
 from pygame.locals import *
 import pygame
 import sys 
+import modelo
 
 HEIGHT = 500
 WIDTH  = 500
@@ -24,6 +25,7 @@ while True:
 
     keys = pygame.key.get_pressed()
     if keys[K_SPACE]:
+        print(modelo.proses(pygame.surfarray.array2d(display)))
         pygame.draw.rect(display, (0, 0, 0), (0, 0, WIDTH, HEIGHT))
 
     pygame.display.flip()
