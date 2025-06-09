@@ -23,18 +23,15 @@ class Clasificador(nn.Module):
         x = self.maxPooling1(F.relu(self.conv1(x)))
         x = F.relu(self.conv2(x))
         x = self.maxPooling3(F.relu(self.conv3(x)))
-        x = torch.flatten(x)
-#         print(x)
-        x = x.view(-1, 1568)
-#          print(x)
+        x = torch.flatten(x, 1)
         x = F.relu(self.linear1(x))
         x = F.relu(self.linear2(x))
         x = F.relu(self.linear3(x))
         return x
     
 net = Clasificador()
-
-net.load_state_dict(torch.load("mnist_net.pth"))
+net.load_state_dict(torch.load("mnist_net.pth", map_location=torch.device("cpu")))
+net.eval()
 
 def proses(input):
     input = np.array(input)
@@ -49,4 +46,6 @@ def proses(input):
     input = input.view(1,1,28,28)
 
 
-    return net(input).argmax()
+    with torch.no_grad():
+        output = net(input)
+    return output.argmax(dim=1)
